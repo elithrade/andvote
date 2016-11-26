@@ -1,6 +1,6 @@
 export default function createPollOptionModel (sequelize, DataTypes) {
   const pollOption = sequelize.define('pollOption', {
-    question: {
+    text: {
       type: DataTypes.STRING,
       allowNull: false
     }
