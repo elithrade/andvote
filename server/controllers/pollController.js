@@ -19,8 +19,26 @@ pollController.handlePost = function (req, res, next) {
     await sequelize.models.pollOption.bulkCreate(pollOptions, {
       transaction
     })
-    res.sendStatus(201)
+    res.status(201).json({
+      createdPollId: createdPoll.dataValues.id
+    })
   }).catch(next)
 }
 
+pollController.handleGet = async function (req, res, next) {
+  var db = new Connection()
+  try {
+    const foundPoll = await db.models.poll.findOne({
+      where: {
+        id: req.params.pollId
+      },
+      include: {
+        model: db.models.pollOption
+      }
+    })
+    res.status(200).json(foundPoll.dataValues)
+  } catch (err) {
+    next(err)
+  }
+}
 export default pollController

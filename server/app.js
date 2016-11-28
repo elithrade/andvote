@@ -30,7 +30,8 @@ async function connect () {
   const app = express()
   app.use(bodyParser.json())
   app.post('/poll', pollController.handlePost)
+  app.get('/poll/:pollId', pollController.handleGet)
 
   const port = 3000
-  app.listen(port, () => console.log(`Running on port ${port}`))
+  app.listen(port, () => console.log(chalk.green(`Running on port ${port}`)))
 })()
