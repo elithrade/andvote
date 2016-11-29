@@ -3,6 +3,7 @@ import Connection from 'sequelize-connect'
 import chalk from 'chalk'
 import path from 'path'
 import pollController from './controllers/pollController'
+import voteController from './controllers/voteController'
 import bodyParser from 'body-parser'
 
 async function connect () {
@@ -14,7 +15,8 @@ async function connect () {
     'andvote_schema',
     'root',
     '', {
-      dialect: 'mysql'
+      dialect: 'mysql',
+      force: false
     },
     discover,
     matcher,
@@ -31,6 +33,7 @@ async function connect () {
   app.use(bodyParser.json())
   app.post('/poll', pollController.handlePost)
   app.get('/poll/:pollId', pollController.handleGet)
+  app.post('/vote', voteController.handlePost)
 
   const port = 3000
   app.listen(port, () => console.log(chalk.green(`Running on port ${port}`)))
