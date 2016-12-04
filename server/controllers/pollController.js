@@ -54,4 +54,5 @@ pollController.handleGet = async function (req, res, next) {
     next(err)
   }
 }
+
 export default pollController
