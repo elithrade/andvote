@@ -5,6 +5,12 @@ const pollController = { }
 pollController.handlePost = function (req, res, next) {
   var sequelize = new Connection().sequelize
   sequelize.transaction(async transaction => {
+    if (req.body.options.length < 2) {
+      res.status(400).json({
+        message: 'You need to specify at least 2 options.'
+      })
+      return
+    }
     const createdPoll = await sequelize.models.poll.create({
       question: req.body.question
     }, {

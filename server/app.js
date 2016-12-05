@@ -1,4 +1,5 @@
 import express from 'express'
+import errorHandler from './middleware/errorHandler'
 import Connection from 'sequelize-connect'
 import chalk from 'chalk'
 import path from 'path'
@@ -34,7 +35,9 @@ async function connect () {
   app.post('/poll', pollController.handlePost)
   app.get('/poll/:pollId', pollController.handleGet)
   app.post('/vote', voteController.handlePost)
+  app.use(errorHandler)
 
   const port = 3000
+
   app.listen(port, () => console.log(chalk.green(`Running on port ${port}`)))
 })()
